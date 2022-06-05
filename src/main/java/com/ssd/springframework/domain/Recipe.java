@@ -125,6 +125,7 @@ public class Recipe {
 
     public void setNotes(Notes notes) {
         this.notes = notes;
+        notes.setRecipe(this);   //using setters for JPA bidirectional relationships
     }
 
     public Set<Category> getCategories() {
@@ -133,5 +134,12 @@ public class Recipe {
 
     public void setCategories(Set<Category> categories) {
         this.categories = categories;
+    }
+
+    //using setters for JPA bidirectional relationships
+    public Recipe getIngredient(Ingredient ingredient){
+        ingredient.setRecipe(this);
+        this.getIngredients().add(ingredient);
+        return this;
     }
 }
