@@ -1,17 +1,19 @@
 package com.ssd.springframework.controllers;
 
+import com.ssd.springframework.domain.Recipe;
 import com.ssd.springframework.services.RecipeService;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.ui.Model;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import static org.junit.Assert.assertEquals;
-import static org.mockito.ArgumentMatchers.anySet;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 public class IndexControllerTest {
     @Mock
@@ -32,10 +34,27 @@ public class IndexControllerTest {
 
     @Test
     public void getIndexPage() {
-        String viewName = indexController.getIndexPage(model);
-        assertEquals("index",viewName);
+        //given
+        Set<Recipe> recipeSet = new HashSet<>();
+        recipeSet.add(new Recipe());
 
-       verify(recipeService,times(1)).getRecipes();
-       verify(model,times(1)).addAttribute(eq("recipes"),anySet());
+        Recipe recipe = new Recipe();
+        recipe.setId(1L);
+
+        recipeSet.add(recipe);
+
+        when(recipeService.getRecipes()).thenReturn(recipeSet);
+
+        ArgumentCaptor<Set<Recipe>> argumentCaptor = ArgumentCaptor.forClass(Set.class);
+
+        //when
+        String viewName = indexController.getIndexPage(model);
+
+        //then
+        assertEquals("index",viewName);
+        verify(recipeService,times(1)).getRecipes();
+        verify(model,times(1)).addAttribute(eq("recipes"),argumentCaptor.capture()); //Mockito Argument Captor
+        Set<Recipe> recipeArgCaptorSet = argumentCaptor.getValue();
+        assertEquals(2,recipeArgCaptorSet.size());
     }
 }
