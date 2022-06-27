@@ -9,10 +9,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest
 public class Spring5RecipeAppApplicationTests {
 
-    public Spring5RecipeAppApplicationTests(){
-
-    }
-
     @Test
    public void contextLoads() {
     }
