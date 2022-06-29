@@ -23,6 +23,7 @@
             <div class="pannel-group">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
+                        <!--/*@thymesVar id="recipe" type="com.ssd.springframework.domain.Recipe"*/-->
                         <h1 class="panel-title" th:text="${recipe.description}">Recipe Description Here!</h1>
                     </div>
                     <div class="panel-body">
@@ -32,9 +33,10 @@
                             </div>
                             <div class="col-md-9">
                                 <ul>
-                                    <li>category 1</li>
-                                    <li>category 2</li>
-                                    <li>category 3</li>
+                                    <li th:remove="all">category 1</li>
+                                    <li th:remove="all">category 2</li>
+                                    <!--/*@thymesVar id="recipe" type="com.ssd.springframework.domain.Recipe"*/-->
+                                    <li th:each="category : ${recipe.categories}" th:text="${category.getDescription()}">category 3</li>
                                 </ul>
                             </div>
                         </div>
@@ -43,13 +45,14 @@
                                 <h5>Prep Time:</h5>
                             </div>
                             <div class="col-md-3">
-                                <p>3 min</p>
+                                <!--/*@thymesVar id="recipe" type="com.ssd.springframework.domain.Recipe"*/-->
+                                <p th:text="${(recipe.prepTime) + ' Min'}">3 min</p>
                             </div>
                             <div class="col-md-3">
                                 <h5>Difficulty:</h5>
                             </div>
                             <div class="col-md-3">
-                                <p>Easy</p>
+                                <p th:text="${recipe.difficulty}">Easy</p>
                             </div>
                         </div>
                         <div class="row">
@@ -57,13 +60,13 @@
                                 <h5>Cooktime:</h5>
                             </div>
                             <div class="col-md-3">
-                                <p> 0 min</p>
+                                <p th:text="${(recipe.cookTime) + ' Min'}"> 0 min</p>
                             </div>
                             <div class="col-md-3">
                                 <h5>Servings:</h5>
                             </div>
                             <div class="col-md-3">
-                                <p>1</p>
+                                <p th:text="${recipe.servings}">1</p>
                             </div>
                         </div>
                         <div class="row">
@@ -71,13 +74,13 @@
                                 <h5>Source:</h5>
                             </div>
                             <div class="col-md-3">
-                                <p>Internet</p>
+                                <p th:text="${recipe.source}">Internet</p>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <h5>URL:</h5>
                             </div>
-                            <div class="col-md-3">
-                                <p>https://www.thespruceeats.com/chocolate-milk-recipe-2355494</p>
+                            <div class="col-md-4">
+                                <p th:text="${recipe.url}">www.thespruceeats.com</p>
                             </div>
                         </div>
                     </div>
@@ -90,9 +93,13 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <ul>
-                                    <li>1 Cup of milk</li>
-                                    <li>1 Teaspoon of unsweetened cocoa powder</li>
-                                    <li>1 Teaspoon of powdered Sugar</li>
+                                    <li  th:remove="all">1 Cup of milk</li>
+                                    <li  th:remove="all">1 Teaspoon of unsweetened cocoa powder</li>
+                                    <!--/*@thymesVar id="recipe" type="com.ssd.springframework.domain.Recipe"*/-->
+                                    <li th:each="ingredient : ${recipe.ingredients}"
+                                        th:text="${(ingredient.amount +
+                                        '  ' + ingredient.uom +
+                                        ' - ' + ingredient.description)}">1 Teaspoon of powdered Sugar</li>
                                 </ul>
                             </div>
                         </div>
@@ -105,10 +112,10 @@
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-md-12">
-                                <p>1. Gather the ingredients.</p>
-                                <p>2. Pour the milk into a glass and slowly add cocoa powder while blending with an immersion blender, spoon, or a small whisk. An immersion blender or a small whisk work best because they reduce the clumping of the cocoa powder.</p>
-                                <p>3. Add powdered sugar until well blended.</p>
-                                <p>4. Serve immediately or cover and place in the refrigerator until ready to drink. Enjoy.</p>
+                                <p th:remove="all">1. Gather the ingredients.</p>
+                                <p th:remove="all">2. Pour the milk into a glass and slowly add cocoa powder while blending with an immersion blender, spoon, or a small whisk. An immersion blender or a small whisk work best because they reduce the clumping of the cocoa powder.</p>
+                                <p th:remove="all">3. Add powdered sugar until well blended.</p>
+                                <p th:text="${recipe.directions}">4. Serve immediately or cover and place in the refrigerator until ready to drink. Enjoy.</p>
 
                             </div>
                         </div>
@@ -121,7 +128,7 @@
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-md-12">
-                                <p>"Quick, simple, and easy to make, this homemade chocolate milk was delightful. My only recommendations would be to increase the amount of powdered sugar and use a small whisk. More of a personal preference, but I felt the small whisk did the job just as well as the immersion blender." —Victoria Heydt</p>
+                                <p th:text="${recipe.notes.recipeNotes}">"Quick, simple, and easy to make, this homemade chocolate milk was delightful. My only recommendations would be to increase the amount of powdered sugar and use a small whisk. More of a personal preference, but I felt the small whisk did the job just as well as the immersion blender." —Victoria Heydt</p>
                             </div>
                         </div>
                     </div>

@@ -1,5 +1,7 @@
 package com.ssd.springframework.services;
 
+import com.ssd.springframework.converters.RecipeCommandToRecipe;
+import com.ssd.springframework.converters.RecipeToRecipeCommand;
 import com.ssd.springframework.domain.Recipe;
 import com.ssd.springframework.repositories.RecipeRepository;
 import org.junit.Before;
@@ -22,10 +24,17 @@ public class RecipeServiceImplTest {
     @Mock
     RecipeRepository recipeRepository;
 
+    @Mock
+    RecipeCommandToRecipe recipeCommandToRecipe;
+
+    @Mock
+    RecipeToRecipeCommand recipeToRecipeCommand;
+
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        recipeService = new RecipeServiceImpl(recipeRepository);
+
+        recipeService = new RecipeServiceImpl(recipeRepository,recipeCommandToRecipe, recipeToRecipeCommand);
     }
 
     @Test
