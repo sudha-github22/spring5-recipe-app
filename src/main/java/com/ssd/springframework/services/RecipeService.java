@@ -10,4 +10,6 @@ public interface RecipeService {
     public Recipe findById(Long id);
 
     public RecipeCommand saveRecipeCommand(RecipeCommand recipeCommand);
+
+    public RecipeCommand findRecipeCommandById(Long id);
 }
