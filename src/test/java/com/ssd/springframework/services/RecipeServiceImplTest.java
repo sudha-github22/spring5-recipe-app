@@ -39,13 +39,17 @@ public class RecipeServiceImplTest {
 
     @Test
     public void getRecipes() {
+        //given
         Recipe recipe = new Recipe();
         HashSet recipesData = new HashSet<>();
         recipesData.add(recipe);
 
         when(recipeRepository.findAll()).thenReturn(recipesData);
 
+        //when
         Set<Recipe> recipes = recipeService.getRecipes();
+
+        //then
         assertEquals(recipes.size(), 1);
         verify(recipeRepository,times(1)).findAll();
 
@@ -53,13 +57,17 @@ public class RecipeServiceImplTest {
 
     @Test
     public void findById() {
+        //given
         Recipe recipe = new Recipe();
         recipe.setId(1L);
         Optional<Recipe> recipeOptional = Optional.of(recipe);
 
         when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);
 
+        //when
         Recipe returnedRecipe = recipeService.findById(1L);
+
+        //then
         assertNotNull("null recipe returned",returnedRecipe);
 
         verify(recipeRepository,times(1)).findById(anyLong());

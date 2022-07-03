@@ -20,7 +20,6 @@ public class IngredientToIngredientCommand implements Converter<Ingredient, Ingr
     @Nullable
     @Override
     public IngredientCommand convert(Ingredient source) {
-        System.out.println("i am here");
         if(source == null) {
             return null;
         }
