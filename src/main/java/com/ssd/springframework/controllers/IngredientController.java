@@ -1,6 +1,8 @@
 package com.ssd.springframework.controllers;
 
 import com.ssd.springframework.commands.IngredientCommand;
+import com.ssd.springframework.commands.RecipeCommand;
+import com.ssd.springframework.commands.UnitOfMeasureCommand;
 import com.ssd.springframework.services.IngredientService;
 import com.ssd.springframework.services.RecipeService;
 import com.ssd.springframework.services.UnitOfMeasureService;
@@ -64,6 +66,25 @@ public class IngredientController {
         log.debug("Saved Ingredient Id :" +savedIngredientCommand.getId());
 
         return "redirect:/recipe/" + savedIngredientCommand.getRecipeId() + "/ingredient/" +savedIngredientCommand.getId() +"/show";
+
+    }
+
+    @GetMapping
+    @RequestMapping("/recipe/{recipeId}/ingredient/new")
+    public String createNewIngredient(@PathVariable String recipeId, Model model){
+
+        //To make sure we have  good id value
+        RecipeCommand recipeCommand = recipeService.findRecipeCommandById(Long.valueOf(recipeId));
+
+        //Need to return back parent id for hidden form property
+        IngredientCommand ingredientCommand = new IngredientCommand();
+        ingredientCommand.setRecipeId(Long.valueOf(recipeId));
+        model.addAttribute("ingredient", ingredientCommand);
+        //init uom
+        ingredientCommand.setUom(new UnitOfMeasureCommand());
+        model.addAttribute("uomList",unitOfMeasureService.listAllUoms());
+
+        return "/recipe/ingredient/ingredientForm";
 
     }
 }
